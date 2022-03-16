@@ -1,0 +1,12 @@
+#pragma once
+#include "Util.h"
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include "base/Logging.h"
+#include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
+int socket_bind_listen(int);
+int setNonblocking(int);
+int readn(int,string&);
+int writen(int,string&);
