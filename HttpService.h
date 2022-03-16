@@ -69,7 +69,8 @@ class HttpService:noncopyable,
 public:
 	typedef std::shared_ptr<Channel> ChannelPtr;
 	HttpService(EventLoop*,int);
-	~HttpService(){ 
+	~HttpService(){
+		//printf("ready to close sockfd:%d\n",sockfd_); 
 		seperateTimer();
 		close(sockfd_); 
 	//	LOG<<"HTTP SERVICE DISCONSTRUCT"<<'\n';

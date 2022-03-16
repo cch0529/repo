@@ -18,11 +18,11 @@ void Server::onNewConnection(){
 	bzero(&clientaddr,sizeof(clientaddr));
 	socklen_t client_addr_len=sizeof clientaddr;
 	int sockfd=0;
-	LOG<<"on newConnection";
+	//LOG<<"on newConnection";
 	while((sockfd=accept(listenfd_,(struct sockaddr*)(&clientaddr),&client_addr_len))>0){
-		LOG<<"New connection from"<<inet_ntoa(clientaddr.sin_addr)<<":"<<ntohs(clientaddr.sin_port);
+		//LOG<<"New connection from"<<inet_ntoa(clientaddr.sin_addr)<<":"<<ntohs(clientaddr.sin_port);
 		int enable=1;
-		LOG<<"sockfd:"<<sockfd;
+		//LOG<<"sockfd:"<<sockfd;
 		if(setsockopt(sockfd,IPPROTO_TCP,TCP_NODELAY,&enable,static_cast<socklen_t>(sizeof enable))==-1){
 			LOG<<"failed in setnodelay";
 			LOG<<"errno:"<<errno;
@@ -40,7 +40,7 @@ void Server::onNewConnection(){
 		//chan->setEvents(EPOLLIN | EPOLLET | EPOLLONESHOT);
 		//EventLoop* curLoop=threadPool_->getNextLoop();
 		//curLoop->addToPoller(chan);
-		printf("add sockfd:%d succed",sockfd);
+		//printf("add sockfd:%d succed",sockfd);
 	}	
 	acceptChannel_->setEvents(EPOLLIN|EPOLLET);
 

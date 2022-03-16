@@ -19,8 +19,13 @@ bool Timer::isUsedUp(){
 	return false;
 }
 void Timer::run(){
-	if(!canceled_)
+	//printf("in timer run()\n");
+	if(!canceled_){
+		//printf("ready to run cb()\n");
 		cb_();
+	}
+	
+		//printf("dont run cb()\n");
 }
 void Timer::update(int timeout){
 		struct timeval now;
@@ -31,9 +36,11 @@ void TimerQueue::addTimer(TimerPtr timer){
 	queue_.push(timer);
 }
 void TimerQueue::handleExpiredTimer(){
+	//printf("in handleEcpiretimer\n");
 	while(!queue_.empty()){
 		TimerPtr tmpTimer=queue_.top();
 		if(tmpTimer->isUsedUp()){
+			//printf("time out\n");
 			tmpTimer->run();
 			queue_.pop();
 		}

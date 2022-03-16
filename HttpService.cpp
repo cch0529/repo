@@ -43,6 +43,7 @@ void HttpService::reset(){
 	state_=PS_REQUEST;	
 }
 void HttpService::handleClose(){
+	//printf("httpservice ready to close,sockfid:%d\n",sockfd_); 
 	std::shared_ptr<HttpService> guard(shared_from_this());
 	loop_->removeFromPoller(getChannel());
 	//LOG<<"httpservice closed,fd:"<<sockfd_<<"\n";	
@@ -62,7 +63,7 @@ void HttpService::handleRead(){
 	else if(nread==0){
 		connectionState_=CS_DISCONNECTING;
 	}
-	LOG<<readBuffer_;
+	//LOG<<readBuffer_;
 	while(readBuffer_.size()>0){
 		/*if(nread<0){
 			error_=true;
@@ -135,12 +136,12 @@ void HttpService::handleRead(){
 		}	
 		else{
 			//LOG<<"no keep alive\n";
-			this->setTimer(DEFAULT_EXPIRED_TIME);
+			//this->setTimer(DEFAULT_EXPIRED_TIME);
 		}
 		events|=EPOLLIN|EPOLLET;
 		channel_->setEvents(events);
 	}
-	LOG<<writeBuffer_<<'\n';
+	//LOG<<writeBuffer_<<'\n';
 	//printf("begin to handle write\n");
 	handleWrite();
 	//printf("end handleRead");
@@ -330,6 +331,8 @@ AnalysisState HttpService::analysisRequest(){
 		header+="Content-Length: " + std::to_string(sbuf.st_size)+"\r\n";
 		header+="Server: cch's web server\r\n";
 		header+="\r\n";
+		writeBuffer_+=header+"hello world\n";
+		return ANALYSIS_SUCCESS;
 		if(method_==HEAD){
 			writeBuffer_+=header;
 			return ANALYSIS_SUCCESS;
