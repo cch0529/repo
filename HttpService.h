@@ -70,7 +70,8 @@ public:
 	typedef std::shared_ptr<Channel> ChannelPtr;
 	HttpService(EventLoop*,int);
 	~HttpService(){ 
-		seperateTimer(); 
+		seperateTimer();
+		close(sockfd_); 
 	//	LOG<<"HTTP SERVICE DISCONSTRUCT"<<'\n';
 	}
 	
